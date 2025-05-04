@@ -20,7 +20,7 @@ int main(){
     ifstream file("z1.txt");
     ofstream output_file("z2.txt");
     vector<string> words;
-    string word;
+    string word,line;
     
    
     if(!file){
@@ -35,11 +35,9 @@ int main(){
         if(vowels_word>2){
             output_file<<word<<" ";
         }
-    }
-    while (file>>word)
-    {
         words.push_back(word);
     }
+   
     sort(words.begin(), words.end(), [](const string& a, const string& b) {
     return a.size() > b.size();
     });
@@ -52,6 +50,18 @@ int main(){
             }
         }
         cout << words[i] << " (" << count << " n)" << endl;
+    }
+    file.clear(); // Скидаємо стан файлу
+    file.seekg(0); // Повертаємося на початок файлу
+    cout << "search_word: ";
+    string search_word;
+    cin >> search_word;
+
+    cout << "sentence \"" << search_word << "\":" << endl;
+    while (getline(file, line)) {
+        if (line.find(search_word) != string::npos) {
+            cout << line << endl;
+        }
     }
 	file.close();
     output_file.close();
